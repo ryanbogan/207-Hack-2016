@@ -7,5 +7,7 @@ public class Main {
 		JFrame window = new JFrame();
 		window.setResizable(false);
 		window.setVisible(true);
+		window.setSize(800,450);
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
