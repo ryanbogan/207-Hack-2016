@@ -15,6 +15,7 @@ public class PhayeHMouseListener implements MouseInputListener {
 		int x = e.getX();
 		int y = e.getY();
 		System.out.println(x + " " + y);
+		System.out.println(Main.getAngle(x, y));
 	}
 
 	@Override
