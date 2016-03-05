@@ -23,18 +23,22 @@ public class PhayeHKeyListener implements KeyListener {
 
         if (key == KeyEvent.VK_LEFT) {
             moveLeft = true;
+            System.out.println("L");
         }
 
         if (key == KeyEvent.VK_RIGHT) {
             moveRight = true;
+            System.out.println("R");
         }
 
         if (key == KeyEvent.VK_UP) {
             moveUp = true;
+            System.out.println("U");
         }
 
         if (key == KeyEvent.VK_DOWN) {
             moveDown = true;
+            System.out.println("D");
         }
 	}
 

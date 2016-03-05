@@ -1,20 +1,20 @@
 package com.phayeh.game;
 
 import java.awt.event.MouseEvent;
-
 import javax.swing.event.MouseInputListener;
 
 public class PhayeHMouseListener implements MouseInputListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// Action button?
+	
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// Action button?
-		
+		int x = e.getX();
+		int y = e.getY();
+		System.out.println(x + " " + y);
 	}
 
 	@Override
