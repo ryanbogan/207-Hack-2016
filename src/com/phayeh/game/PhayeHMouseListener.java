@@ -12,10 +12,7 @@ public class PhayeHMouseListener implements MouseInputListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		int x = e.getX();
-		int y = e.getY();
-		System.out.println(x + " " + y);
-		System.out.println(Main.getAngle(x, y));
+		// Shoot, RoF depends on variable from gun
 	}
 
 	@Override
