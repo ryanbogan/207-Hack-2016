@@ -52,7 +52,7 @@ public class Player extends MapObject {
 		
 		super(tm);
 		
-		width = 30;
+		width = 32;
 		height = 30;
 		cwidth = 20;
 		cheight = 20;
@@ -80,7 +80,7 @@ public class Player extends MapObject {
 		//load sprites
 		try {
 			
-			BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/images/sprites/playersprites.gif"));
+			BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/images/sprites/player_sprites.png"));
 			
 			sprites = new ArrayList<BufferedImage[]>();
 			for(int i = 0; i < 7; i++) {
@@ -200,7 +200,7 @@ public class Player extends MapObject {
 				currentAction = INKBLAST;
 				animation.setFrames(sprites.get(INKBLAST));
 				animation.setDelay(100);
-				width = 30;
+				width = 32;
 			}
 		}
 		else if(dy > 0) {
@@ -209,13 +209,13 @@ public class Player extends MapObject {
 					currentAction = GLIDING;
 					animation.setFrames(sprites.get(GLIDING));
 					animation.setDelay(100);
-					width = 30;
+					width = 32;
 			}
 				else if(currentAction != FALLING) {
 					currentAction = FALLING;
 					animation.setFrames(sprites.get(FALLING));
 					animation.setDelay(100);
-					width = 30;
+					width = 32;
 				}
 			}
 		}
@@ -224,7 +224,7 @@ public class Player extends MapObject {
 				currentAction = JUMPING;
 				animation.setFrames(sprites.get(JUMPING));
 				animation.setDelay(-1);
-				width = 30;
+				width = 32;
 			}
 		}
 		else if(left || right)  {
@@ -232,7 +232,7 @@ public class Player extends MapObject {
 				currentAction = WALKING;
 				animation.setFrames(sprites.get(WALKING));
 				animation.setDelay(40);
-				width = 30;
+				width = 32;
 			}
 		}
 		else {
@@ -240,7 +240,7 @@ public class Player extends MapObject {
 				currentAction = IDLE;
 				animation.setFrames(sprites.get(IDLE));
 				animation.setDelay(400);
-				width = 30;
+				width = 32;
 			}
 		}
 		
