@@ -24,7 +24,7 @@ public class Player extends MapObject {
 	private boolean inking;
 	private int inkCost;
 	private int inkBlastDamage;
-	//private ArrayList<inkBlast> inkBlasts;
+	private ArrayList<InkBlast> inkBlasts;
 	
 	//slap
 	private boolean slapping;
@@ -72,7 +72,7 @@ public class Player extends MapObject {
 		
 		inkCost = 200;
 		inkBlastDamage = 5;
-		//inkBlasts = new ArrayList<InkBlast>();
+		inkBlasts = new ArrayList<InkBlast>();
 		
 		slapDamage = 8;
 		slapRange = 40;
@@ -194,6 +194,28 @@ public class Player extends MapObject {
 			if(animation.hasPlayedOnce()) inking = false;
 		}
 		
+		//inkblast attack
+		ink += 1;
+		if(ink > maxInk) ink = maxInk;
+		if(inking && currentAction != INKBLAST) {
+			if(ink > inkCost) {
+				ink -= inkCost;
+				InkBlast ib = new InkBlast(tileMap, facingRight);
+				ib.setPosition(x, y);
+				inkBlasts.add(ib);
+				
+			}
+		}
+		
+		//update inkblasts
+		for(int i = 0; i < inkBlasts.size(); i++) {
+			inkBlasts.get(i).update();
+			if(inkBlasts.get(i).shouldRemove()) {
+				inkBlasts.remove(i);
+				i--;
+			}
+		}
+		
 		//set animation
 		if(slapping) {
 			if(currentAction != SLAPPING) {
@@ -263,6 +285,11 @@ public class Player extends MapObject {
 		public void draw(Graphics2D g) {
 			
 			setMapPosition();
+			
+			//draw inkblasts
+			for(int i = 0; i < inkBlasts.size(); i++) {
+				inkBlasts.get(i).draw(g);
+			}
 			
 			//draw player
 			if(flinching) {

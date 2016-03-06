@@ -1,9 +1,10 @@
 package com.phayeh.gamestate;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
+import Entity.Enemy;
 import Entity.Player;
 import TileMap.Background;
 import TileMap.TileMap;
@@ -16,6 +17,8 @@ public class Level1State extends GameState {
 	private Background bg;
 	
 	private Player player;
+	
+	private ArrayList<Enemy> enemies;
 	
 	public Level1State(GameStateManager gsm) {
 		this.gsm = gsm;
@@ -35,6 +38,7 @@ public class Level1State extends GameState {
 		player = new Player(tileMap);
 		player.setPosition(100, 100);
 		
+		
 	}
 	
 	public void update() {
@@ -42,6 +46,9 @@ public class Level1State extends GameState {
 		//update player
 		player.update();
 		tileMap.setPosition(Board.WIDTH / 2 - player.getx(), Board.HEIGHT / 2 - player.gety());
+		
+		//set background
+		bg.setPosition(tileMap.getx(), tileMap.gety());
 		
 	}
 	public void draw(Graphics2D g) {
