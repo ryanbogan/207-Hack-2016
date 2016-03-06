@@ -31,7 +31,7 @@ public class Explosion {
 			
 			BufferedImage spritesheet = ImageIO.read(
 				getClass().getResourceAsStream(
-					"/Sprites/Enemies/explosion.gif"
+					"/images/sprites/explosion.gif"
 				)
 			);
 			
