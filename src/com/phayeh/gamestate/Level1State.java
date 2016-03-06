@@ -47,8 +47,8 @@ public class Level1State extends GameState {
 	public void draw(Graphics2D g) {
 
 		//clear screen
-		g.setColor(Color.WHITE);
-		g.fillRect(0, 0, Board.WIDTH, Board.HEIGHT);
+		//g.setColor(Color.WHITE);
+		//g.fillRect(0, 0, Board.WIDTH, Board.HEIGHT);
 		
 		//draw bg
 		bg.draw(g);
@@ -69,6 +69,7 @@ public class Level1State extends GameState {
 		if(k == KeyEvent.VK_E) player.setGliding(true);
 		if(k == KeyEvent.VK_R) player.setSlapping();
 		if(k == KeyEvent.VK_F) player.setInking();
+
 	}
 	public void keyReleased(int k) {
 		if(k == KeyEvent.VK_LEFT) player.setLeft(false);

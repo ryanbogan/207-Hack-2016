@@ -52,7 +52,7 @@ public class Player extends MapObject {
 		
 		super(tm);
 		
-		width = 32;
+		width = 30;
 		height = 30;
 		cwidth = 20;
 		cheight = 20;
@@ -112,11 +112,11 @@ public class Player extends MapObject {
 	public int getMaxInk() { return maxInk; }
 	
 	public void setInking() {
-		inking = true;
+		
 	}
 	
 	public void setSlapping() {
-		slapping = true;
+		
 	}
 	
 	public void setGliding(boolean b) {
@@ -200,7 +200,7 @@ public class Player extends MapObject {
 				currentAction = INKBLAST;
 				animation.setFrames(sprites.get(INKBLAST));
 				animation.setDelay(100);
-				width = 32;
+				width = 60;
 			}
 		}
 		else if(dy > 0) {
@@ -209,13 +209,13 @@ public class Player extends MapObject {
 					currentAction = GLIDING;
 					animation.setFrames(sprites.get(GLIDING));
 					animation.setDelay(100);
-					width = 32;
+					width = 30;
 				}
 				else if(currentAction != FALLING) {
 					currentAction = FALLING;
 					animation.setFrames(sprites.get(FALLING));
 					animation.setDelay(100);
-					width = 32;
+					width = 30;
 				}
 			}
 		}
@@ -224,7 +224,7 @@ public class Player extends MapObject {
 				currentAction = JUMPING;
 				animation.setFrames(sprites.get(JUMPING));
 				animation.setDelay(-1);
-				width = 32;
+				width = 30;
 			}
 		}
 		else if(left || right)  {
@@ -240,7 +240,7 @@ public class Player extends MapObject {
 				currentAction = IDLE;
 				animation.setFrames(sprites.get(IDLE));
 				animation.setDelay(400);
-				width = 32;
+				width = 30;
 			}
 		}
 		
