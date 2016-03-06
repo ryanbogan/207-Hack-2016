@@ -21,7 +21,8 @@ public class InkBlast extends MapObject {
 		facingRight = right;
 		
 		moveSpeed = 3.8;
-		dx = moveSpeed;
+		if(right) dx = moveSpeed;
+		else dx = -moveSpeed;
 		
 		width = 30;
 		height = 30;
