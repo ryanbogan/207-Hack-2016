@@ -87,6 +87,12 @@ public abstract class MapObject {
 		int topTile = (int) (y - cheight / 2) / tileSize;
 		int bottomTile = (int) (y + cheight / 2 - 1) / tileSize;
 		
+		if(topTile < 0 || bottomTile >= tileMap.getNumRows() ||
+				leftTile < 0 || rightTile>= tileMap.getNumCols()) {
+			topLeft = topRight = bottomLeft = bottomRight = false;
+			return;
+		}
+		
 		int tl = tileMap.getType(topTile, leftTile);
 		int tr = tileMap.getType(topTile, rightTile);
 		int bl = tileMap.getType(bottomTile, leftTile);
@@ -101,8 +107,8 @@ public abstract class MapObject {
 	
 	public void checkTileMapCollision() {
 		
-		currCol = (int) x / tileSize;
-		currRow = (int) y / tileSize;
+		currRow = (int) x / tileSize;
+		currCol = (int) y / tileSize;
 		
 		xdest = x + dx;
 		ydest = y + dy;
@@ -146,9 +152,9 @@ public abstract class MapObject {
 				dx = 0;
 				xtemp = (currCol + 1) * tileSize - cwidth / 2;
 			}
-		}
-		else {
-			xtemp += dx;
+			else {
+				xtemp += dx;
+			}
 		}
 		if(!falling) {
 			calculateCorners(x, ydest + 1);

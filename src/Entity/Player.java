@@ -210,7 +210,7 @@ public class Player extends MapObject {
 					animation.setFrames(sprites.get(GLIDING));
 					animation.setDelay(100);
 					width = 32;
-			}
+				}
 				else if(currentAction != FALLING) {
 					currentAction = FALLING;
 					animation.setFrames(sprites.get(FALLING));
