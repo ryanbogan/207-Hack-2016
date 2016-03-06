@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 
 import com.phayeh.game.Board;
 
+
 public class Background {
 
 	private BufferedImage image;
@@ -30,8 +31,8 @@ public class Background {
 	}
 	
 	public void setPosition(double x, double y) {
-		this.x = x;
-		this.y = y;
+		this.x = (x * moveScale) % Board.WIDTH;
+		this.y = (y * moveScale) % Board.HEIGHT;
 	}
 	
 	public void setVector(double dx, double dy) {
@@ -40,14 +41,19 @@ public class Background {
 	}
 	
 	public void update() {
-		x += dx;
-		y += dy;
+		x += dx % Board.WIDTH;
+		y += dy % Board.HEIGHT;
 	}
 	
 	public void draw (Graphics2D g) {
+		
 		g.drawImage(image, (int)x, (int)y, null);
+		
 		if(x < 0) {
 			g.drawImage(image, (int)x + Board.WIDTH, (int)y, null);
+		}
+		if(x > 0) {
+			g.drawImage(image, (int)x - Board.WIDTH, (int)y, null); 
 		}
 	}
 	

@@ -7,10 +7,11 @@ public class Main {
 	private static final int WIDTH = 800;
 	
 	public static void main(String args[]) {
-		JFrame window = new Window();
+		JFrame window = new JFrame("Filler Title");
+		window.setContentPane(new Board());
 		window.setResizable(false);
+		window.pack();
 		window.setVisible(true);
-		window.setSize(WIDTH, HEIGHT);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
