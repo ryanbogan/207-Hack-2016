@@ -33,7 +33,7 @@ public class InkBlast extends MapObject {
 			
 			BufferedImage spritesheet = ImageIO.read(
 				getClass().getResourceAsStream(
-					"/Sprites/Player/fireball.gif"
+					"/images/sprites/fireball.gif"
 				)
 			);
 			
