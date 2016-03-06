@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
-import com.phayeh.game.Board;
+import com.phayeh.game.GamePanel;
 
 public class TileMap {
 	
@@ -45,8 +45,8 @@ public class TileMap {
 	
 	public TileMap(int tileSize) {
 		this.tileSize= tileSize;
-		numRowsToDraw = Board.HEIGHT / tileSize + 2;
-		numColsToDraw = Board.WIDTH / tileSize + 2;
+		numRowsToDraw = GamePanel.HEIGHT / tileSize + 2;
+		numColsToDraw = GamePanel.WIDTH / tileSize + 2;
 		tween = 0.07;
 	}
 	
@@ -86,9 +86,9 @@ public class TileMap {
 			width = numCols * tileSize;
 			height = numRows * tileSize;
 			
-			xmin = Board.WIDTH - width;
+			xmin = GamePanel.WIDTH - width;
 			xmax = 0;
-			ymin = Board.HEIGHT - height;
+			ymin = GamePanel.HEIGHT - height;
 			ymax = 0;
 			
 			String delims= "\\s+";

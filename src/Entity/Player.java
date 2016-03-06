@@ -1,12 +1,13 @@
 package Entity;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
+import TileMap.*;
+import audio.AudioPlayer;
+
 import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
-
-import TileMap.TileMap;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 public class Player extends MapObject {
 	
@@ -18,28 +19,28 @@ public class Player extends MapObject {
 	private boolean dead;
 	private boolean flinching;
 	private long flinchTimer;
-	private boolean facingRight;
 	
-	// ink
-	private boolean inking;
+	// inkball
+	private boolean firing;
 	private int inkCost;
 	private int inkBlastDamage;
 	private ArrayList<InkBlast> inkBlasts;
 	
-	//slap
-	private boolean slapping;
+	// scratch
+	private boolean scratching;
 	private int slapDamage;
 	private int slapRange;
 	
-	//gliding
+	// gliding
 	private boolean gliding;
 	
-	//animations
+	// animations
 	private ArrayList<BufferedImage[]> sprites;
-	private final int[] numFrames = {2, 8, 1, 2, 4, 2, 5};
-	private final Animation animation;
+	private final int[] numFrames = {
+		2, 8, 1, 2, 4, 2, 5
+	};
 	
-	//animation actions
+	// animation actions
 	private static final int IDLE = 0;
 	private static final int WALKING = 1;
 	private static final int JUMPING = 2;
@@ -47,6 +48,8 @@ public class Player extends MapObject {
 	private static final int GLIDING = 4;
 	private static final int INKBLAST = 5;
 	private static final int SLAPPING = 6;
+	
+	private HashMap<String, AudioPlayer> sfx;
 	
 	public Player(TileMap tm) {
 		
@@ -67,7 +70,7 @@ public class Player extends MapObject {
 		
 		facingRight = true;
 		
-		health= maxHealth = 5;
+		health = maxHealth = 5;
 		ink = maxInk = 2500;
 		
 		inkCost = 200;
@@ -77,33 +80,60 @@ public class Player extends MapObject {
 		slapDamage = 8;
 		slapRange = 40;
 		
-		//load sprites
+		// load sprites
 		try {
 			
-			BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/images/sprites/player_sprites.png"));
+			BufferedImage spritesheet = ImageIO.read(
+				getClass().getResourceAsStream(
+					"/Sprites/Player/playersprites.gif"
+				)
+			);
 			
 			sprites = new ArrayList<BufferedImage[]>();
 			for(int i = 0; i < 7; i++) {
-				BufferedImage[] bi = new BufferedImage[numFrames[i]];
+				
+				BufferedImage[] bi =
+					new BufferedImage[numFrames[i]];
+				
 				for(int j = 0; j < numFrames[i]; j++) {
+					
 					if(i != SLAPPING) {
-						bi[j] = spritesheet.getSubimage(j * width, i * height, width, height);
+						bi[j] = spritesheet.getSubimage(
+								j * width,
+								i * height,
+								width,
+								height
+						);
 					}
 					else {
-						bi[j] = spritesheet.getSubimage(j * width * 2, i * height, width * 2, height);
-					} 
+						bi[j] = spritesheet.getSubimage(
+								j * width * 2,
+								i * height,
+								width * 2,
+								height
+						);
+					}
+					
 				}
 				
 				sprites.add(bi);
+				
 			}
+			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 		animation = new Animation();
 		currentAction = IDLE;
 		animation.setFrames(sprites.get(IDLE));
 		animation.setDelay(400);
+		
+		sfx = new HashMap<String, AudioPlayer>();
+		sfx.put("jump", new AudioPlayer("/SFX/jump.mp3"));
+		sfx.put("scratch", new AudioPlayer("/SFX/scratch.mp3"));
+		
 	}
 	
 	public int getHealth() { return health; }
@@ -111,21 +141,77 @@ public class Player extends MapObject {
 	public int getInk() { return ink; }
 	public int getMaxInk() { return maxInk; }
 	
-	public void setInking() {
-		inking = true;
+	public void setFiring() { 
+		firing = true;
 	}
-	
 	public void setSlapping() {
-		slapping = true;
+		scratching = true;
+	}
+	public void setGliding(boolean b) { 
+		gliding = b;
 	}
 	
-	public void setGliding(boolean b) {
-		gliding = b;
+	public void checkAttack(ArrayList<Enemy> enemies) {
+		
+		// loop through enemies
+		for(int i = 0; i < enemies.size(); i++) {
+			
+			Enemy e = enemies.get(i);
+			
+			// scratch attack
+			if(scratching) {
+				if(facingRight) {
+					if(
+						e.getx() > x &&
+						e.getx() < x + slapRange && 
+						e.gety() > y - height / 2 &&
+						e.gety() < y + height / 2
+					) {
+						e.hit(slapDamage);
+					}
+				}
+				else {
+					if(
+						e.getx() < x &&
+						e.getx() > x - slapRange &&
+						e.gety() > y - height / 2 &&
+						e.gety() < y + height / 2
+					) {
+						e.hit(slapDamage);
+					}
+				}
+			}
+			
+			// inkballs
+			for(int j = 0; j < inkBlasts.size(); j++) {
+				if(inkBlasts.get(j).intersects(e)) {
+					e.hit(inkBlastDamage);
+					inkBlasts.get(j).setHit();
+					break;
+				}
+			}
+			
+			// check enemy collision
+			if(intersects(e)) {
+				hit(e.getDamage());
+			}
+			
+		}
+		
+	}
+	
+	public void hit(int damage) {
+		if(flinching) return;
+		health -= damage;
+		if(health < 0) health = 0;
+		if(health == 0) dead = true;
+		flinching = true;
+		flinchTimer = System.nanoTime();
 	}
 	
 	private void getNextPosition() {
 		
-		//movement
+		// movement
 		if(left) {
 			dx -= moveSpeed;
 			if(dx < -maxSpeed) {
@@ -153,18 +239,21 @@ public class Player extends MapObject {
 			}
 		}
 		
-		//cannot move while attacking unless in air 
-		if((currentAction == SLAPPING || currentAction == INKBLAST) && !(jumping || falling)) {
+		// cannot move while attacking, except in air
+		if(
+		(currentAction == SLAPPING || currentAction == INKBLAST) &&
+		!(jumping || falling)) {
 			dx = 0;
 		}
 		
-		//jumping
+		// jumping
 		if(jumping && !falling) {
+			sfx.get("jump").play();
 			dy = jumpStart;
 			falling = true;
 		}
 		
-		//falling
+		// falling
 		if(falling) {
 			
 			if(dy > 0 && gliding) dy += fallSpeed * 0.1;
@@ -181,33 +270,32 @@ public class Player extends MapObject {
 	
 	public void update() {
 		
-		//update position
+		// update position
 		getNextPosition();
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 		
-		//check attack has stopped
+		// check attack has stopped
 		if(currentAction == SLAPPING) {
-			if(animation.hasPlayedOnce()) slapping = false;
+			if(animation.hasPlayedOnce()) scratching = false;
 		}
 		if(currentAction == INKBLAST) {
-			if(animation.hasPlayedOnce()) inking = false;
+			if(animation.hasPlayedOnce()) firing = false;
 		}
 		
-		//inkblast attack
+		// inkball attack
 		ink += 1;
 		if(ink > maxInk) ink = maxInk;
-		if(inking && currentAction != INKBLAST) {
+		if(firing && currentAction != INKBLAST) {
 			if(ink > inkCost) {
 				ink -= inkCost;
-				InkBlast ib = new InkBlast(tileMap, facingRight);
-				ib.setPosition(x, y);
-				inkBlasts.add(ib);
-				
+				InkBlast fb = new InkBlast(tileMap, facingRight);
+				fb.setPosition(x, y);
+				inkBlasts.add(fb);
 			}
 		}
 		
-		//update inkblasts
+		// update inkballs
 		for(int i = 0; i < inkBlasts.size(); i++) {
 			inkBlasts.get(i).update();
 			if(inkBlasts.get(i).shouldRemove()) {
@@ -216,16 +304,26 @@ public class Player extends MapObject {
 			}
 		}
 		
-		//set animation
-		if(slapping) {
+		// check done flinching
+		if(flinching) {
+			long elapsed =
+				(System.nanoTime() - flinchTimer) / 1000000;
+			if(elapsed > 1000) {
+				flinching = false;
+			}
+		}
+		
+		// set animation
+		if(scratching) {
 			if(currentAction != SLAPPING) {
+				sfx.get("scratch").play();
 				currentAction = SLAPPING;
 				animation.setFrames(sprites.get(SLAPPING));
 				animation.setDelay(50);
 				width = 60;
 			}
 		}
-		else if(inking) {
+		else if(firing) {
 			if(currentAction != INKBLAST) {
 				currentAction = INKBLAST;
 				animation.setFrames(sprites.get(INKBLAST));
@@ -241,12 +339,12 @@ public class Player extends MapObject {
 					animation.setDelay(100);
 					width = 30;
 				}
-				else if(currentAction != FALLING) {
-					currentAction = FALLING;
-					animation.setFrames(sprites.get(FALLING));
-					animation.setDelay(100);
-					width = 30;
-				}
+			}
+			else if(currentAction != FALLING) {
+				currentAction = FALLING;
+				animation.setFrames(sprites.get(FALLING));
+				animation.setDelay(100);
+				width = 30;
 			}
 		}
 		else if(dy < 0) {
@@ -257,7 +355,7 @@ public class Player extends MapObject {
 				width = 30;
 			}
 		}
-		else if(left || right)  {
+		else if(left || right) {
 			if(currentAction != WALKING) {
 				currentAction = WALKING;
 				animation.setFrames(sprites.get(WALKING));
@@ -276,30 +374,34 @@ public class Player extends MapObject {
 		
 		animation.update();
 		
-		//set direction
+		// set direction
 		if(currentAction != SLAPPING && currentAction != INKBLAST) {
 			if(right) facingRight = true;
 			if(left) facingRight = false;
 		}
-	}	
-		public void draw(Graphics2D g) {
-			
-			setMapPosition();
-			
-			//draw inkblasts
-			for(int i = 0; i < inkBlasts.size(); i++) {
-				inkBlasts.get(i).draw(g);
-			}
-			
-			//draw player
-			if(flinching) {
-				long elapsed = (System.nanoTime() - flinchTimer) / 1000000;
-				if(elapsed / 100 % 2 == 0) {
-					return;
-				}
-			}
-			
-			super.draw(g);
-			
-		}
+		
 	}
+	
+	public void draw(Graphics2D g) {
+		
+		setMapPosition();
+		
+		// draw inkballs
+		for(int i = 0; i < inkBlasts.size(); i++) {
+			inkBlasts.get(i).draw(g);
+		}
+		
+		// draw player
+		if(flinching) {
+			long elapsed =
+				(System.nanoTime() - flinchTimer) / 1000000;
+			if(elapsed / 100 % 2 == 0) {
+				return;
+			}
+		}
+		
+		super.draw(g);
+		
+	}
+	
+}

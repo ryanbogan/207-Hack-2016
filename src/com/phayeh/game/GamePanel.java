@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import com.phayeh.gamestate.GameStateManager;
 
 @SuppressWarnings("serial")
-public class Board extends JPanel implements KeyListener, Runnable{
+public class GamePanel extends JPanel implements KeyListener, Runnable{
 
 public static final int WIDTH = 320;
 public static final int HEIGHT = 240;
@@ -29,7 +29,7 @@ private Graphics2D g;
 //game state manager
 private GameStateManager gsm;
 
-	public Board() {
+	public GamePanel() {
 		super();
 		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		setFocusable(true);

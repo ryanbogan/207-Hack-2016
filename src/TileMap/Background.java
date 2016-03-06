@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
-import com.phayeh.game.Board;
+import com.phayeh.game.GamePanel;
 
 
 public class Background {
@@ -31,8 +31,8 @@ public class Background {
 	}
 	
 	public void setPosition(double x, double y) {
-		this.x = (x * moveScale) % Board.WIDTH;
-		this.y = (y * moveScale) % Board.HEIGHT;
+		this.x = (x * moveScale) % GamePanel.WIDTH;
+		this.y = (y * moveScale) % GamePanel.HEIGHT;
 	}
 	
 	public void setVector(double dx, double dy) {
@@ -41,8 +41,8 @@ public class Background {
 	}
 	
 	public void update() {
-		x += dx % Board.WIDTH;
-		y += dy % Board.HEIGHT;
+		x += dx % GamePanel.WIDTH;
+		y += dy % GamePanel.HEIGHT;
 	}
 	
 	public void draw (Graphics2D g) {
@@ -50,10 +50,10 @@ public class Background {
 		g.drawImage(image, (int)x, (int)y, null);
 		
 		if(x < 0) {
-			g.drawImage(image, (int)x + Board.WIDTH, (int)y, null);
+			g.drawImage(image, (int)x + GamePanel.WIDTH, (int)y, null);
 		}
 		if(x > 0) {
-			g.drawImage(image, (int)x - Board.WIDTH, (int)y, null); 
+			g.drawImage(image, (int)x - GamePanel.WIDTH, (int)y, null); 
 		}
 	}
 	

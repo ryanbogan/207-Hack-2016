@@ -8,7 +8,7 @@ public class Main {
 	
 	public static void main(String args[]) {
 		JFrame window = new JFrame("Filler Title");
-		window.setContentPane(new Board());
+		window.setContentPane(new GamePanel());
 		window.setResizable(false);
 		window.pack();
 		window.setVisible(true);

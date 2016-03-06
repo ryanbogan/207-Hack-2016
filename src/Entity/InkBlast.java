@@ -1,20 +1,17 @@
 package Entity;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
-import javax.imageio.ImageIO;
-
 import TileMap.TileMap;
 
-public class InkBlast extends MapObject{
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+
+public class InkBlast extends MapObject {
 	
 	private boolean hit;
 	private boolean remove;
 	private BufferedImage[] sprites;
 	private BufferedImage[] hitSprites;
-	
-	private Animation animation;
 	
 	public InkBlast(TileMap tm, boolean right) {
 		
@@ -26,24 +23,38 @@ public class InkBlast extends MapObject{
 		if(right) dx = moveSpeed;
 		else dx = -moveSpeed;
 		
-		width= 30;
+		width = 30;
 		height = 30;
 		cwidth = 14;
 		cheight = 14;
 		
-		//load sprites
+		// load sprites
 		try {
 			
-			BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/images/sprites/fireball.gif"));
+			BufferedImage spritesheet = ImageIO.read(
+				getClass().getResourceAsStream(
+					"/Sprites/Player/fireball.gif"
+				)
+			);
 			
 			sprites = new BufferedImage[4];
 			for(int i = 0; i < sprites.length; i++) {
-				sprites[i] = spritesheet.getSubimage(i * width, 0, width, height);
+				sprites[i] = spritesheet.getSubimage(
+					i * width,
+					0,
+					width,
+					height
+				);
 			}
 			
 			hitSprites = new BufferedImage[3];
 			for(int i = 0; i < hitSprites.length; i++) {
-				hitSprites[i] = spritesheet.getSubimage(i * width, height, width, height);
+				hitSprites[i] = spritesheet.getSubimage(
+					i * width,
+					height,
+					width,
+					height
+				);
 			}
 			
 			animation = new Animation();
@@ -70,7 +81,7 @@ public class InkBlast extends MapObject{
 	public void update() {
 		
 		checkTileMapCollision();
-		setPosition(xtemp,ytemp);
+		setPosition(xtemp, ytemp);
 		
 		if(dx == 0 && !hit) {
 			setHit();
@@ -81,7 +92,8 @@ public class InkBlast extends MapObject{
 			remove = true;
 		}
 		
-	}	
+	}
+	
 	public void draw(Graphics2D g) {
 		
 		setMapPosition();
@@ -91,3 +103,21 @@ public class InkBlast extends MapObject{
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

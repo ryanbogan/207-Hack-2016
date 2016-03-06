@@ -2,7 +2,7 @@ package Entity;
 
 import TileMap.TileMap;
 
-public class Enemy extends MapObject {
+public abstract class Enemy extends MapObject {
 	
 	protected int health;
 	protected int maxHealth;
@@ -27,5 +27,9 @@ public class Enemy extends MapObject {
 		if(health == 0) dead = true;
 		flinching = true;
 		flinchTimer = System.nanoTime();
+	}
+	
+	public void update() {
+		
 	}
 }
