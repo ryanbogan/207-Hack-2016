@@ -8,6 +8,7 @@ import audio.AudioPlayer;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class Level1State extends GameState {
@@ -48,7 +49,7 @@ public class Level1State extends GameState {
 		
 		hud = new HUD(player);
 		
-		bgMusic = new AudioPlayer("/music/level1-1.mp3");
+		bgMusic = new AudioPlayer("/207-Hack-2016/resources/music/level1-1.mp3");
 		bgMusic.play();
 		
 	}
@@ -157,6 +158,11 @@ public class Level1State extends GameState {
 		if(k == KeyEvent.VK_DOWN) player.setDown(false);
 		if(k == KeyEvent.VK_W) player.setJumping(false);
 		if(k == KeyEvent.VK_E) player.setGliding(false);
+	}
+	
+	public void mousePressed(MouseEvent e) {
+		player.setXDir(e.getX());
+		player.setYDir(e.getY());
 	}
 	
 }

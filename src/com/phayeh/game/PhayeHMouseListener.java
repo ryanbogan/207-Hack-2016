@@ -1,18 +1,20 @@
 package com.phayeh.game;
 
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.event.MouseInputListener;
 
 public class PhayeHMouseListener implements MouseInputListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-	
+		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// Shoot, RoF depends on variable from gun
+		System.out.println("Clicked: " + e.getX() + " " + e.getY());
 	}
 
 	@Override
@@ -23,7 +25,6 @@ public class PhayeHMouseListener implements MouseInputListener {
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// Focus on screen?
 		
 	}
 

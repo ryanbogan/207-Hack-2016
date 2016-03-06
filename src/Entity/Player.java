@@ -4,7 +4,9 @@ import TileMap.*;
 import audio.AudioPlayer;
 
 import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
@@ -24,6 +26,8 @@ public class Player extends MapObject {
 	private boolean firing;
 	private int inkCost;
 	private int inkBlastDamage;
+	private double xDir;
+	private double yDir;
 	private ArrayList<InkBlast> inkBlasts;
 	
 	// scratch
@@ -75,6 +79,8 @@ public class Player extends MapObject {
 		
 		inkCost = 200;
 		inkBlastDamage = 5;
+		xDir = 0;
+		yDir = 0;
 		inkBlasts = new ArrayList<InkBlast>();
 		
 		slapDamage = 8;
@@ -140,6 +146,14 @@ public class Player extends MapObject {
 	public int getMaxHealth() { return maxHealth; }
 	public int getInk() { return ink; }
 	public int getMaxInk() { return maxInk; }
+	
+	public void setXDir(double xDir) {
+		this.xDir = xDir;
+	}
+	
+	public void setYDir(double yDir) {
+		this.yDir = yDir;
+	}
 	
 	public void setFiring() { 
 		firing = true;
@@ -294,6 +308,8 @@ public class Player extends MapObject {
 				inkBlasts.add(fb);
 			}
 		}
+		
+		// System.out.println(xDir + " " + yDir);
 		
 		// update inkballs
 		for(int i = 0; i < inkBlasts.size(); i++) {
