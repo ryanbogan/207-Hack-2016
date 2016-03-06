@@ -22,7 +22,7 @@ public class Background {
 	public Background(String s, double ms) {
 		
 		try {
-			image = ImageIO.read(getClass().getResource(s));
+			image = ImageIO.read(getClass().getResourceAsStream(s));
 			moveScale = ms;
 		}
 		catch(Exception e) {
