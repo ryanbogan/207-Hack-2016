@@ -87,10 +87,10 @@ public class Player extends MapObject {
 				BufferedImage[] bi = new BufferedImage[numFrames[i]];
 				for(int j = 0; j < numFrames[i]; j++) {
 					if(i != SLAPPING) {
-						bi[j] = spritesheet.getSubimage(j * width, i * height, width * 2, height);
+						bi[j] = spritesheet.getSubimage(j * width, i * height, width, height);
 					}
 					else {
-						bi[j] = spritesheet.getSubimage(j * width * 2, i * height, width, height);
+						bi[j] = spritesheet.getSubimage(j * width * 2, i * height, width * 2, height);
 					} 
 				}
 				
@@ -208,7 +208,7 @@ public class Player extends MapObject {
 				currentAction = INKBLAST;
 				animation.setFrames(sprites.get(INKBLAST));
 				animation.setDelay(100);
-				width = 60;
+				width = 30;
 			}
 		}
 		else if(dy > 0) {
@@ -240,7 +240,7 @@ public class Player extends MapObject {
 				currentAction = WALKING;
 				animation.setFrames(sprites.get(WALKING));
 				animation.setDelay(40);
-				width = 32;
+				width = 30;
 			}
 		}
 		else {
