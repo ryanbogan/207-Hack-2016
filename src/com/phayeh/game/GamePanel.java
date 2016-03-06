@@ -5,14 +5,16 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
+import javax.swing.event.MouseInputListener;
 
 import com.phayeh.gamestate.GameStateManager;
 
 @SuppressWarnings("serial")
-public class GamePanel extends JPanel implements KeyListener, Runnable{
+public class GamePanel extends JPanel implements KeyListener, MouseInputListener, Runnable{
 
 public static final int WIDTH = 320;
 public static final int HEIGHT = 240;
@@ -43,6 +45,7 @@ private GameStateManager gsm;
 		if(thread == null) {
 			thread = new Thread(this);
 			addKeyListener(this);
+			addMouseListener(this);
 			thread.start(); 
 		}
 	}
@@ -105,5 +108,46 @@ private GameStateManager gsm;
 	}
 	public void keyReleased(KeyEvent key) {
 		gsm.keyReleased(key.getKeyCode());
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		gsm.mouseClicked(e);
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		gsm.mouseMoved(e);
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

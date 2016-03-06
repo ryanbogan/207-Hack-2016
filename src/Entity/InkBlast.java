@@ -3,11 +3,9 @@ package Entity;
 import TileMap.TileMap;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
-import javax.swing.event.MouseInputListener;
 
 public class InkBlast extends MapObject {
 	
@@ -16,15 +14,15 @@ public class InkBlast extends MapObject {
 	private BufferedImage[] sprites;
 	private BufferedImage[] hitSprites;
 	
-	public InkBlast(TileMap tm, boolean right) {
+	public InkBlast(TileMap tm, boolean right, double angle) {
 		
 		super(tm);
 		
 		facingRight = right;
 		
 		moveSpeed = 3.8;
-		if(right) dx = moveSpeed;
-		else dx = -moveSpeed;
+		dx = moveSpeed * Math.cos(angle);
+		dy = moveSpeed * Math.sin(angle);
 		
 		width = 30;
 		height = 30;
@@ -77,6 +75,7 @@ public class InkBlast extends MapObject {
 		animation.setFrames(hitSprites);
 		animation.setDelay(70);
 		dx = 0;
+		dy = 0;
 	}
 	
 	public boolean shouldRemove() { return remove; }
@@ -86,7 +85,7 @@ public class InkBlast extends MapObject {
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 		
-		if(dx == 0 && !hit) {
+		if(dx == 0 && !hit && dy == 0) {
 			setHit();
 		}
 		

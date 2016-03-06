@@ -19,7 +19,7 @@ public class Main {
 		int dx = WIDTH/2 - x;
 		int dy = HEIGHT/2 - y;
 		
-		double retAngle = Math.toRadians(Math.atan((double)(dy)/(double)(dx)));
+		double retAngle = Math.toDegrees(Math.atan((double)(dy)/(double)(dx)));
 		return retAngle;
 	}
 }

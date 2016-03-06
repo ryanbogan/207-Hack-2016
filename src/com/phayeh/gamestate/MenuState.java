@@ -4,6 +4,7 @@ import TileMap.Background;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 public class MenuState extends GameState {
 	
@@ -105,5 +106,23 @@ public class MenuState extends GameState {
 		}
 	}
 	public void keyReleased(int k) {}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
