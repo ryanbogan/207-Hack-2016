@@ -8,7 +8,6 @@ import audio.AudioPlayer;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class Level1State extends GameState {
@@ -159,26 +158,4 @@ public class Level1State extends GameState {
 		if(k == KeyEvent.VK_W) player.setJumping(false);
 		if(k == KeyEvent.VK_E) player.setGliding(false);
 	}
-	
-	public void mouseEntered(MouseEvent e) {
-		System.out.println("enter");
-	}
-	public void mouseClicked(MouseEvent e) {
-		player.setAiming();
-		player.setMX(e.getX() - 160);
-		player.setMY(e.getY() - 120);
-		if(e.getX() <= 40) {
-			player.setSlapping();
-		}
-		else player.setFiring();
-		System.out.println("click");
-	}
-	public void mouseMoved(MouseEvent e) {
-
-	}
-	
-	public void mouseReleased(MouseEvent e) {
-		
-	}
-	
 }

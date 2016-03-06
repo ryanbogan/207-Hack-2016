@@ -1,7 +1,5 @@
 package com.phayeh.gamestate;
 
-import java.awt.event.MouseEvent;
-
 public class GameStateManager {
 	
 	private GameState[] gameStates;
@@ -56,21 +54,5 @@ public class GameStateManager {
 	
 	public void keyReleased(int k) {
 		gameStates[currentState].keyReleased(k);
-	}
-	
-	public void mouseEntered(MouseEvent e) {
-		gameStates[currentState].mouseEntered(e);
-	}
-	
-	public void mouseClicked(MouseEvent e) {
-		gameStates[currentState].mouseClicked(e);
-	}
-	
-	public void mouseMoved(MouseEvent e) {
-		gameStates[currentState].mouseMoved(e);
-	}
-	
-	public void mouseReleased() {
-		
 	}
 }

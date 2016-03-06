@@ -20,16 +20,12 @@ public class Player extends MapObject {
 	private int maxInk;
 	private boolean dead;
 	private boolean flinching;
-	private boolean aiming;
 	private long flinchTimer;
-	private double mX;
-	private double mY;
 	
 	// inkball
 	private boolean firing;
 	private int inkCost;
 	private int inkBlastDamage;
-	private double fireAngle;
 	private ArrayList<InkBlast> inkBlasts;
 	
 	// scratch
@@ -139,28 +135,13 @@ public class Player extends MapObject {
 		sfx = new HashMap<String, AudioPlayer>();
 		sfx.put("jump", new AudioPlayer("/sounds/Jump.wav"));
 		sfx.put("scratch", new AudioPlayer("/sounds/Player_Hit.wav"));
-		
 	}
 	
 	public int getHealth() { return health; }
 	public int getMaxHealth() { return maxHealth; }
 	public int getInk() { return ink; }
 	public int getMaxInk() { return maxInk; }
-	public void setAngle(double x, double y) {
-		if(x >=0 && y >=0) fireAngle = Math.atan(y/x);
-		else if(x <= 0 && y >= 0 || x <= 0 && y <= 0) fireAngle = 180 + Math.atan(y/x);
-		else if(x >= 0 && y <= 0) fireAngle = 360 + Math.atan(y/x);
-	}
 	
-	public void setMX(int mX) {
-		this.mX = mX;
-	}
-	public void setMY(int mY) {
-		this.mY = mY;
-	}
-	public void setAiming() {
-		aiming = true;
-	}
 	public void setFiring() { 
 		firing = true;
 	}
@@ -295,10 +276,6 @@ public class Player extends MapObject {
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 		
-		if(aiming) {
-			setAngle(mX, mY);
-		}
-		
 		// check attack has stopped
 		if(currentAction == SLAPPING) {
 			if(animation.hasPlayedOnce()) scratching = false;
@@ -313,7 +290,7 @@ public class Player extends MapObject {
 		if(firing && currentAction != INKBLAST) {
 			if(ink > inkCost) {
 				ink -= inkCost;
-				InkBlast fb = new InkBlast(tileMap, facingRight, fireAngle);
+				InkBlast fb = new InkBlast(tileMap, facingRight);
 				fb.setPosition(x, y);
 				inkBlasts.add(fb);
 			}
@@ -405,7 +382,6 @@ public class Player extends MapObject {
 			if(right) facingRight = true;
 			if(left) facingRight = false;
 		}
-		aiming = false;
 	}
 	
 	public void draw(Graphics2D g) {

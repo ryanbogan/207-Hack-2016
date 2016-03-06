@@ -14,7 +14,7 @@ import javax.swing.event.MouseInputListener;
 import com.phayeh.gamestate.GameStateManager;
 
 @SuppressWarnings("serial")
-public class GamePanel extends JPanel implements KeyListener, MouseInputListener, Runnable{
+public class GamePanel extends JPanel implements KeyListener, Runnable{
 
 public static final int WIDTH = 320;
 public static final int HEIGHT = 240;
@@ -45,7 +45,6 @@ private GameStateManager gsm;
 		if(thread == null) {
 			thread = new Thread(this);
 			addKeyListener(this);
-			addMouseListener(this);
 			thread.start(); 
 		}
 	}
@@ -108,46 +107,5 @@ private GameStateManager gsm;
 	}
 	public void keyReleased(KeyEvent key) {
 		gsm.keyReleased(key.getKeyCode());
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		gsm.mouseClicked(e);
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		gsm.mouseMoved(e);
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 }
