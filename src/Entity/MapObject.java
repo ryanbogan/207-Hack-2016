@@ -1,8 +1,9 @@
 package Entity;
 
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
-import javafx.animation.Animation;
 import TileMap.Tile;
 import TileMap.TileMap;
 

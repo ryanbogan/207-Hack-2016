@@ -13,7 +13,7 @@ public class Slugger extends Enemy {
 	
 	private BufferedImage[] sprites;
 	
-	private Animation animation;
+	protected Animation animation;
 	
 	public Slugger(TileMap tm) {
 		
