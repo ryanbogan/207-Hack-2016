@@ -25,7 +25,7 @@ public class MenuState extends GameState {
 		this.gsm = gsm;
 		
 		try {
-			bg = new Background("/207-Hack-2016/Resources/Backgrounds/menubg.gif", 1);
+			bg = new Background("/Resources/Backgrounds/menubg.gif", 1);
 			bg.setVector(-0.1, 0);
 			
 			titleColor = new Color(128, 0, 0);
