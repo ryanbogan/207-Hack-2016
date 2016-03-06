@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import com.phayeh.gamestate.GameStateManager;
 
+@SuppressWarnings("serial")
 public class Board extends JPanel implements KeyListener, Runnable{
 
 public static final int WIDTH = 320;

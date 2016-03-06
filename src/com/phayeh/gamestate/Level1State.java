@@ -3,7 +3,7 @@ package com.phayeh.gamestate;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import TileMap.Tile;
+import TileMap.Background;
 import TileMap.TileMap;
 
 import com.phayeh.game.Board;
@@ -11,6 +11,7 @@ import com.phayeh.game.Board;
 public class Level1State extends GameState {
 
 	private TileMap tileMap;
+	private Background bg;
 	
 	public Level1State(GameStateManager gsm) {
 		this.gsm = gsm;
@@ -24,6 +25,7 @@ public class Level1State extends GameState {
 		tileMap.loadMap("/images/maps/level1-1.map");
 		tileMap.setPosition(0, 0);
 		
+		bg = new Background("/images/backgrounds/grassbg1.gif", 0.1);
 		
 	}
 	
@@ -33,6 +35,9 @@ public class Level1State extends GameState {
 		//clear screen
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, Board.WIDTH, Board.HEIGHT);
+		
+		//draw bg
+		bg.draw(g);
 		
 		//draw tilemap
 		tileMap.draw(g);
