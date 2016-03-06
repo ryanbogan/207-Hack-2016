@@ -86,12 +86,12 @@ public class Player extends MapObject {
 			for(int i = 0; i < 7; i++) {
 				BufferedImage[] bi = new BufferedImage[numFrames[i]];
 				for(int j = 0; j < numFrames[i]; j++) {
-					if(i != 6) {
-						bi[j] = spritesheet.getSubimage(j * width, i * height, width, height);
+					if(i != SLAPPING) {
+						bi[j] = spritesheet.getSubimage(j * width, i * height, width * 2, height);
 					}
 					else {
 						bi[j] = spritesheet.getSubimage(j * width * 2, i * height, width, height);
-					}
+					} 
 				}
 				
 				sprites.add(bi);
@@ -112,11 +112,11 @@ public class Player extends MapObject {
 	public int getMaxInk() { return maxInk; }
 	
 	public void setInking() {
-		
+		inking = true;
 	}
 	
 	public void setSlapping() {
-		
+		slapping = true;
 	}
 	
 	public void setGliding(boolean b) {
@@ -185,6 +185,14 @@ public class Player extends MapObject {
 		getNextPosition();
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
+		
+		//check attack has stopped
+		if(currentAction == SLAPPING) {
+			if(animation.hasPlayedOnce()) slapping = false;
+		}
+		if(currentAction == INKBLAST) {
+			if(animation.hasPlayedOnce()) inking = false;
+		}
 		
 		//set animation
 		if(slapping) {

@@ -82,28 +82,24 @@ public abstract class MapObject {
 	}
 	
 	public void calculateCorners(double x, double y) {
-		int leftTile = (int) (x - cwidth / 2) / tileSize;
-		int rightTile = (int) (x + cwidth / 2 - 1) / tileSize;
-		int topTile = (int) (y - cheight / 2) / tileSize;
-		int bottomTile = (int) (y + cheight / 2 - 1) / tileSize;
-		
-		if(topTile < 0 || bottomTile >= tileMap.getNumRows() ||
-				leftTile < 0 || rightTile>= tileMap.getNumCols()) {
-			topLeft = topRight = bottomLeft = bottomRight = false;
-			return;
-		}
-		
-		int tl = tileMap.getType(topTile, leftTile);
-		int tr = tileMap.getType(topTile, rightTile);
-		int bl = tileMap.getType(bottomTile, leftTile);
-		int br = tileMap.getType(bottomTile, rightTile);
-		
-		topLeft = tl == Tile.BLOCKED;
-		topRight = tr == Tile.BLOCKED;
-		bottomLeft = bl == Tile.BLOCKED;
-		bottomRight = br == Tile.BLOCKED;
-		
-	}
+        int leftTile = (int)(x - cwidth / 2) / tileSize;
+        int rightTile = (int)(x + cwidth / 2 - 1) / tileSize;
+        int topTile = (int)(y - cheight / 2) / tileSize;
+        int bottomTile = (int)(y + cheight / 2 - 1) / tileSize;
+        if(topTile < 0 || bottomTile >= tileMap.getNumRows() ||
+                leftTile < 0 || rightTile >= tileMap.getNumCols()) {
+                topLeft = topRight = bottomLeft = bottomRight = false;
+                return;
+        }
+        int tl = tileMap.getType(topTile, leftTile);
+        int tr = tileMap.getType(topTile, rightTile);
+        int bl = tileMap.getType(bottomTile, leftTile);
+        int br = tileMap.getType(bottomTile, rightTile);
+        topLeft = tl == Tile.BLOCKED;
+        topRight = tr == Tile.BLOCKED;
+        bottomLeft = bl == Tile.BLOCKED;
+        bottomRight = br == Tile.BLOCKED;
+}
 	
 	public void checkTileMapCollision() {
 		

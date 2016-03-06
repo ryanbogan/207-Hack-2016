@@ -70,7 +70,7 @@ public class Level1State extends GameState {
 		if(k == KeyEvent.VK_R) player.setSlapping();
 		if(k == KeyEvent.VK_F) player.setInking();
 
-	}
+	} 
 	public void keyReleased(int k) {
 		if(k == KeyEvent.VK_LEFT) player.setLeft(false);
 		if(k == KeyEvent.VK_RIGHT) player.setRight(false);
